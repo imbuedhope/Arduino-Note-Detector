@@ -26,7 +26,7 @@ void serialEvent(Serial myPort) {
   // clear the serial buffer and note that you've
   // had first contact from the microcontroller. 
   // Otherwise, add the incoming byte to the array:
-  if (firstContact == false) {
+  if (!firstContact) {
     if (inByte == 'A') { 
       myPort.clear();          // clear the serial port buffer
       firstContact = true;     // you've had first contact from the microcontroller
