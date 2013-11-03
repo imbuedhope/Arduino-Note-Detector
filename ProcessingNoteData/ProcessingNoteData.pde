@@ -38,7 +38,7 @@ void serialEvent(Serial myPort) {
     serialInArray[serialCount] = inByte; // 0 to 255;
     serialCount++;
     
-    if(serialCount == 1048576) {
+    if(serialCount == 385000) {
       noteDetectorThread t = new noteDetectorThread(serialInArray);
       t.start();
       
