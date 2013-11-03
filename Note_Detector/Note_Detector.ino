@@ -184,14 +184,43 @@ String pitchname[] = {
   "NOTE_DS8"
 };
 
-void setup() {
-  // put your setup code here, to run once:
+//Audio out with 38.5kHz sampling rate
+//by Amanda Ghassaei
+//http://www.instructables.com/id/Arduino-Audio-Input/
+//Sept 2012
+
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+*/
+
+//int incomingAudio;//storage for A0 data
+
+void setup(){
+  
+  //set up continuous sampling of analog pin 0 (you don't need to understand this part, just know how to use it in the loop())
+  
+  //clear ADCSRA and ADCSRB registers
+  ADCSRA = 0;
+  ADCSRB = 0;
+  
+  ADMUX |= (1 << REFS0); //set reference voltage
+  ADMUX |= (1 << ADLAR); //left align the ADC value- so we can read highest 8 bits from ADCH register only
+  
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS0); //set ADC clock with 32 prescaler- 16mHz/32=500kHz
+  ADCSRA |= (1 << ADATE); //enabble auto trigger
+  ADCSRA |= (1 << ADEN); //enable ADC
+  ADCSRA |= (1 << ADSC); //start ADC measurements
+  
+  //if you want to add other things to setup(), do it here
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly: 
-
+void loop(){
+  PORTD = ADCH;
 }
 
 void sendNoteData(int frequency){
