@@ -2,6 +2,10 @@
 
 void setup(){
   
+  //connect to comptuer
+  Serial.begin(57600);
+  establishContact();
+  
   //set up continuous sampling of analog pin 0
   
   //clear ADCSRA and ADCSRB registers
@@ -16,12 +20,17 @@ void setup(){
   ADCSRA |= (1 << ADEN); //enable ADC
   ADCSRA |= (1 << ADSC); //start ADC measurements
   
-  //
-
 }
 
 void loop(){
   PORTD = ADCH; //sends byte to Digital Ports 0-7 (Which includes TX - RX!)
+}
+
+void establishContact() {
+  while (Serial.available() <= 0) {
+    Serial.print('A');   // send a capital A
+    delay(300);
+  }
 }
 
 //reference: http://www.instructables.com/id/Arduino-Audio-Input
